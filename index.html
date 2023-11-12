@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Make Force Layout</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    
+    <script src="network.js"></script>
+
+</head>
+<body>
+    <div>
+        <h1 align="center">Major Assignment 3</h1>
+        <h2 align="center">Network Visualization</h2>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <h4>Alpha:<span id="alpha"></span></h4>
+        </div>
+    </div>
+
+    <div class="svg"></div>
+
+    <div class="authorDataContainer"> <b>Author Data</b>
+        <div class="group1" id="name">Name: </div>
+        <div class="group1" id="ID">ID: </div>
+        <div class="group1" id="publications">Number of Publications: </div>
+        <div class="group1" id="country">Country: </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <svg id="Network" width="900" height="700"></svg>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col"> Node Size: 
+            <label>
+                <input type="radio" name="radioGroup" value="Publications" checked>
+                No. of Publications
+            </label>
+            <label>
+                <input type="radio" name="radioGroup" value="Degree">
+                Node Degree
+            </label>
+        </div>
+        <div class="col">
+            <label for="collide">Collide Force:</label>
+            <input type="range" id="collide" min="0" max="100" step="1" value="25">
+        </div>
+        <div class="col">
+            <label for="charge">Charge Force:</label>
+            <input type="range" id="charge" min="-1000" max="1000" step="10" value="0">
+        </div>
+        <div class="col">
+            <label for="linkStrength">Link Strength:</label>
+            <input type="range" id="linkStrength" min="0" max="1" step="0.1" value="1">
+        </div>
+    </div>
+    <script>
+        d3.json("../data/author_network.json").then(function (data){
+
+            const window_dims = {
+                width: window.innerWidth,
+                height: window.innerHeight
+            };
+
+            const svgWidth = window_dims.width*2.8;
+            const svgHeight = window_dims.height*2.8;
+
+            let svg = d3.select('#Network').append("svg").attr("viewBox",`0 0 ${svgWidth} ${svgHeight}`)
+
+//            let svg = d3.select('#Network').append("svg").attr("viewBox","0 0 3000 200")
+            simulate(data,svg) // main function to make network
+        })
+
+    </script>
+
+</body>
+</html>
